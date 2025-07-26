@@ -1,4 +1,4 @@
-//Contet component of JSX
+//Contet component of react
 const Content = () => {
     const pickRandomName = () => {
         const name = ['arian', 'arash', 'koroush'];

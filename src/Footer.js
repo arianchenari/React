@@ -1,3 +1,4 @@
+//Footer component of react
 const Footer = () => {
     const today = new Date();
 
