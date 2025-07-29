@@ -1,53 +1,16 @@
-import { useState } from "react";
-
+import ItemList from "./ItemList"
 //Contet component of react
-const Content = () => {
-    const [items, setItems] = useState([{
-        id: 1,
-        checked: false,
-        item: 'wash dishes and watch'
-    }, {
-        id: 2,
-        checked: false,
-        item: 'item 2'
-    }, {
-        id: 3,
-        checked: false,
-        item: 'item 3'
-    }, {
-        id: 4,
-        checked: false,
-        item: 'item 4'
-    }]);
-
-    function handleCheck(id) {
-        const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} : item)
-        setItems(listItems);
-        localStorage.setItem('listItems', JSON.stringify(listItems))
-    }
-
-    function handleDelete(id) {
-        const listItems = items.filter((item) => item.id !== id ? item : '')
-        setItems(listItems);
-        localStorage.setItem('listItems', JSON.stringify(listItems))
-    }
+const Content = ({ items, handleCheck, handleDelete }) => { //drilin props witch we using this component
 
     return(
         <main>
             {items.length ? (
-                <ul>
-                    {items.map((item) => (
-                        <li className="item" key={item.id}>
-                            <input type="checkbox" checked={item.checked} onChange={() => {handleCheck(item.id)}}/>
-                            <label onDoubleClick={() => {handleCheck(item.id)}} style={item.checked ? {textDecoration: 'line-through'} : null}>
-                            {item.item}</label>
-                            <button onClick={() => handleDelete(item.id)}>Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <h1>Your list is empty</h1>
-            )}
+                <ItemList //becuase we have long codes and relative to togather we use another usable component to define that and better organize code
+                    items={items}
+                    handleCheck={handleCheck}
+                    handleDelete={handleDelete}
+                />
+            ) : ( <h1>Your list is empty</h1>) }
         </main>
     )
 }

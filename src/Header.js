@@ -1,15 +1,14 @@
 //Header component of react
-const Header = () => {
-    /*using inline styling
-    const styleHeader = {//styling actully have object kind of in jsx
-        backgroundColor: '#000',//in jsx we can`t use - for properties so we use camalCase
-        color: '#fff'
-    }*/
+const Header = ({ title }) => { // distructring the props : props.title =  { title }
   return (
-    <header /*style={styleHeader}*/>
-        <h1>Groceries List</h1>
+    <header>
+        <h1>{title} List</h1>
     </header>
   )
+}
+
+Header.defaultProps = {//using def props to if not recieve a data from api
+  title: "Default Title",
 }
 
 export default Header

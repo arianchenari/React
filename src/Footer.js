@@ -1,10 +1,9 @@
 //Footer component of react
-const Footer = () => {
-    const today = new Date();
-
+const Footer = ( {length} ) => {//driling with distructuring length property
+    
   return (
     <footer>
-        <p>Copyright &copy; {today.getFullYear()}</p>
+        <p>{length} List {length === 1 ? 'item' : 'items'}</p>
     </footer>
   )
 }
