@@ -2,30 +2,52 @@ import { useState } from "react";
 
 //Contet component of react
 const Content = () => {
-    //useState(initialValue) return a array witch have 2 value : [state, setState()]
-    const [name, setName] = useState('arian')//set name as def arian and have setName func to change it
-    const [count, setCount] = useState(0)
+    const [items, setItems] = useState([{
+        id: 1,
+        checked: false,
+        item: 'wash dishes and watch'
+    }, {
+        id: 2,
+        checked: false,
+        item: 'item 2'
+    }, {
+        id: 3,
+        checked: false,
+        item: 'item 3'
+    }, {
+        id: 4,
+        checked: false,
+        item: 'item 4'
+    }]);
 
-    const pickRandomName = () => {
-        const name = ['arian', 'arash', 'koroush'];
-        const index = Math.floor(Math.random() * 3);
-        setName(name[index]);
+    function handleCheck(id) {
+        const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} : item)
+        setItems(listItems);
+        localStorage.setItem('listItems', JSON.stringify(listItems))
     }
 
-    const changeNumber = () => {
-        setCount(count + 1);//expected 1 and it is 0
-        //when we click button it actully show the state of count witch is 0 and then plus it to one so it 
-        // is 1 in next click then we change that to another state and in the next click it will show up 2
-        setCount(count + 1);//and it is in the first 0 + 1 , and also after code 16 becuase we talk about 
-        // state not a value and state of count in the first is zero also
-        console.log(count);//actully show the state not a final value
+    function handleDelete(id) {
+        const listItems = items.filter((item) => item.id !== id ? item : '')
+        setItems(listItems);
+        localStorage.setItem('listItems', JSON.stringify(listItems))
     }
 
     return(
         <main>
-            <p onDoubleClick={pickRandomName}>Hello {name}!</p>{/*using () cause a run early when page run*/}
-            <button onClick={pickRandomName}>Change name</button>
-            <button onClick={changeNumber}>Count</button>
+            {items.length ? (
+                <ul>
+                    {items.map((item) => (
+                        <li className="item" key={item.id}>
+                            <input type="checkbox" checked={item.checked} onChange={() => {handleCheck(item.id)}}/>
+                            <label onDoubleClick={() => {handleCheck(item.id)}} style={item.checked ? {textDecoration: 'line-through'} : null}>
+                            {item.item}</label>
+                            <button onClick={() => handleDelete(item.id)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
+                <h1>Your list is empty</h1>
+            )}
         </main>
     )
 }

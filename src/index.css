@@ -44,6 +44,34 @@ main {
   align-items: center;
 }
 
+ul{
+  list-style: none;
+}
+
+ul .item{
+  display: grid;
+  grid-template-columns: 50px 1fr 50px;
+  column-gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #00000063;
+  box-shadow: 1px 1px 4px #00000063;
+}
+
+.item input{
+  width: 50px;
+  cursor: pointer;
+}
+
+.item button{
+  width: 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: red;
+  color: #fff;
+  cursor: pointer;
+}
+
 footer {
   width: 100%;
   padding: 0.25em;
