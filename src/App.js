@@ -4,6 +4,7 @@ import SearchItem from './SearchItem';
 import Content from './Content';
 import Footer from './Footer';
 import { useEffect, useState } from 'react';
+import apiRequest from './apiRequest';
 
 function App() {
   const API_URL = 'http://localhost:3500/items';
@@ -36,11 +37,21 @@ function App() {
 
     }, []);
 
-  function addItem(item) {
+  async function addItem(item) {
     const id = items.length ? items[items.length - 1].id + 1 : 1
     const myNewItem = {id, checked: false, item}
     const listItems = [...items, myNewItem];
     setItems(listItems);
+
+    const postOption = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(myNewItem)
+    }
+    const result = await apiRequest(API_URL, postOption);
+    if(result) setFetchError(result);
   }
 
   function handleSubmit(e) {
@@ -49,14 +60,31 @@ function App() {
     addItem(newItem);
   }
 
-  function handleCheck(id) {
+  async function handleCheck(id) {
     const listItems = items.map((item) => item.id === id ? {...item, checked: !item.checked} : item)
     setItems(listItems);
+
+    const myItem = listItems.filter((item) => item.id === id);
+    const updateOption = {
+      method: 'PATCH',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ checked: myItem[0].checked })
+    };
+    const requUrl = `${API_URL}/${id}`
+    const result = await apiRequest(requUrl, updateOption);
+    if(result) setFetchError(result);
   }
 
-  function handleDelete(id) {
+  async function handleDelete(id) {
     const listItems = items.filter((item) => item.id !== id ? item : '')
     setItems(listItems);
+
+    const deleteOption = { method: 'DELETE' };
+    const requUrl = `${API_URL}/${id}`;
+    const result = await apiRequest(requUrl, deleteOption);
+    if(result) setFetchError(result);
   }
 
   return (
