@@ -41,6 +41,10 @@ main {
   flex-grow: 1;
 }
 
+h1{
+  text-align: center;
+}
+
 .addForm{
   display: flex;
   align-items: center;
